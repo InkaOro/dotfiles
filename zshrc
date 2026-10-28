@@ -113,3 +113,5 @@ mini() {
   if [[ ! "$name" =~ ^[A-Za-z0-9._-]+$ ]]; then echo "mini: name must be letters, digits, . _ -"; return 1; fi
   command ssh -t mini "zsh -lc 'mkdir -p ~/code/$name; tmux has-session -t fleet 2>/dev/null || tmux new-session -d -s fleet -c ~/code; if ! tmux list-windows -t fleet -F \"#W\" | grep -qx \"$name\"; then tmux new-window -d -t fleet -n \"$name\" -c ~/code/$name \"claude; exec zsh -l\"; fi; exec tmux attach -t fleet:$name'"
 }
+# mstatus — email-campaign status from the Mac mini (jobs, what is sending, today's counts, throttles, log tails)
+mstatus() { command ssh mini 'code/fleet/bin/status.sh'; }
