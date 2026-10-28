@@ -69,3 +69,47 @@ export EDITOR=code
 
 # Set ipdb as the default Python debugger
 export PYTHONBREAKPOINT=ipdb.set_trace
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/Users/RicardoGonzales/.local/bin:$PATH"
+
+
+
+# Added by Antigravity
+export PATH="/Users/RicardoGonzales/.antigravity/antigravity/bin:$PATH"
+
+# bun completions
+[ -s "/Users/RicardoGonzales/.bun/_bun" ] && source "/Users/RicardoGonzales/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/RicardoGonzales/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# --- Quick project dirs ---
+hash -d artlens=/Users/RicardoGonzales/code/artlens/ArtLens
+hash -d galleryiq=/Users/RicardoGonzales/code/ArtGalleryIQ
+hash -d artcheck=/Users/RicardoGonzales/art_provenance_tool
+hash -d aciq=/Users/RicardoGonzales/artcollectoriq_new_ai
+hash -d cultural=/Users/RicardoGonzales/code/artnews-site
+hash -d ig-cultural=/Users/RicardoGonzales/instagram-culturalsignal
+hash -d ig-aciq=/Users/RicardoGonzales/code/instagram-artagent
+hash -d ig-wey=/Users/RicardoGonzales/instagram-wey-advisory
+hash -d scrapy=/Users/RicardoGonzales/code/InkaOro/scrapy-projects
+hash -d auction=/Users/RicardoGonzales/code/InkaOro/auction-reporting
+hash -d upload=/Users/RicardoGonzales/code/InkaOro/artcollectoriq_db
+hash -d amoru=/Users/RicardoGonzales/code/Amoru.ai
+hash -d eco=/Users/RicardoGonzales/code/ecosystem-strategy
+export AGIQ_APPLE_PT='128491729'
+
+# mini [name] — Mac mini. No arg: plain ssh. With a name: make ~/code/<name> on the mini,
+# open (or reuse) a tmux window of that name in the `fleet` session running Claude Code, and attach.
+# Detach with Ctrl-b d; the window and Claude keep running on the mini.  (2026-10-28)
+mini() {
+  if [ $# -eq 0 ]; then command ssh mini; return; fi
+  local name="$1"
+  if [[ ! "$name" =~ ^[A-Za-z0-9._-]+$ ]]; then echo "mini: name must be letters, digits, . _ -"; return 1; fi
+  command ssh -t mini "zsh -lc 'mkdir -p ~/code/$name; tmux has-session -t fleet 2>/dev/null || tmux new-session -d -s fleet -c ~/code; if ! tmux list-windows -t fleet -F \"#W\" | grep -qx \"$name\"; then tmux new-window -d -t fleet -n \"$name\" -c ~/code/$name \"claude; exec zsh -l\"; fi; exec tmux attach -t fleet:$name'"
+}
