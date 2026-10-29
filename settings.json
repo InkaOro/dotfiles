@@ -62,7 +62,7 @@
         "**/vendor/**": true
     },
     "git.enabled": false,
-    "python.defaultInterpreterPath": "~/.pyenv/shims/python",
+    "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
     "python.formatting.provider": "yapf",
     "python.terminal.activateEnvironment": false,
     "ruby.lint":
@@ -75,5 +75,27 @@
     "workbench.settings.editor": "json",
     "workbench.settings.openDefaultSettings": true,
     "workbench.settings.useSplitJSON": true,
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "security.workspace.trust.untrustedFiles": "open",
+    "files.autoSave": "afterDelay",
+    "tabnine.experimentalAutoImports": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.donotVerifyTags": true,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "[css]": {
+
+      "editor.suggest.insertMode": "replace"
+    },
+    "workbench.settings.applyToAllProfiles": [
+      "editor.maxTokenizationLineLength"
+    ],
+    "github.copilot.editor.enableAutoCompletions": true,
+    "notebook.lineNumbers": "on",
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "workbench.editor.empty.hint": "hidden",
+    "claudeCode.preferredLocation": "panel",
+    "claudeCode.selectedModel": "default",
+    "claudeCode.allowDangerouslySkipPermissions": true,
+    "claudeCode.useTerminal": true
 }

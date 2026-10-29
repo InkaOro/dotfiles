@@ -53,5 +53,10 @@
 [init]
   defaultBranch = master
 [user]
-	email = ricardo.gonzales@gmail.com
-	name = ricardo gonzales
+	email = 65492226+InkaOro@users.noreply.github.com
+	name = InkaOro
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
