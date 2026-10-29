@@ -111,12 +111,12 @@ export AGIQ_APPLE_PT='128491729'
 # The optional window name lets one repo have several Claude windows (e.g. mini surrey_business_outreach zoco).
 # Each Ghostty window attaches through its own grouped session (view-<window>) so two open windows never mirror
 # each other: tmux keeps one "current window" per session, and sharing a session made both terminals show the same
-# Claude and redraw endlessly (2026-10-29). The view session is destroyed on detach; windows live on in `fleet`.
+# Claude and redraw endlessly (2026-10-29). The view session is killed after detach; windows live on in `fleet`.
 mini() {
   if [ $# -eq 0 ]; then command ssh mini; return; fi
   local name="$1" win="${2:-$1}"
   if [[ ! "$name" =~ ^[A-Za-z0-9._-]+$ || ! "$win" =~ ^[A-Za-z0-9._-]+$ ]]; then echo "mini: names must be letters, digits, . _ -"; return 1; fi
-  command ssh -t mini "zsh -lc 'mkdir -p ~/code/$name; tmux has-session -t fleet 2>/dev/null || tmux new-session -d -s fleet -c ~/code; if ! tmux list-windows -t fleet -F \"#W\" | grep -qx \"$win\"; then tmux new-window -d -t fleet -n \"$win\" -c ~/code/$name \"env -u CLAUDE_CODE_OAUTH_TOKEN claude; exec zsh -l\"; fi; tmux has-session -t view-$win 2>/dev/null || tmux new-session -d -s view-$win -t fleet; tmux set-option -t view-$win destroy-unattached on >/dev/null; tmux select-window -t view-$win:$win; exec tmux attach -t view-$win'"
+  command ssh -t mini "zsh -lc 'mkdir -p ~/code/$name; tmux has-session -t fleet 2>/dev/null || tmux new-session -d -s fleet -c ~/code; if ! tmux list-windows -t fleet -F \"#W\" | grep -qx \"$win\"; then tmux new-window -d -t fleet -n \"$win\" -c ~/code/$name \"env -u CLAUDE_CODE_OAUTH_TOKEN claude; exec zsh -l\"; fi; tmux has-session -t view-$win 2>/dev/null || tmux new-session -d -s view-$win -t fleet; tmux select-window -t view-$win:$win; tmux attach -t view-$win; tmux kill-session -t view-$win 2>/dev/null'"
 }
 # mstatus — email-campaign status from the Mac mini (jobs, what is sending, today's counts, throttles, log tails)
 mstatus() { command ssh mini 'code/fleet/bin/status.sh'; }
